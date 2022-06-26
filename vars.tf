@@ -16,7 +16,7 @@ variable "vpc_id"{
 
 
 variable "ami" {
-  default = "ami-01b0d2be18bd9840b"
+  default = "ami-0edb7c4286314206c"
 }
 
 variable "instance_type"{
