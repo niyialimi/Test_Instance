@@ -17,14 +17,14 @@ pipeline {
            }
         }
 
-         stage('terraform init'){
+         stage('Terraform init'){
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  sh "terraform init"
                  
          }
          }
-         stage('terraform plan'){
+         stage('Terraform plan'){
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  //sh "terraform apply -auto-approve"
@@ -42,8 +42,8 @@ pipeline {
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
                  //sh "terraform apply -auto-approve"
-                 sh "terraform destroy -input=false -auto-approve"
-                //  sh "terraform apply  -input=false tfplan"
+                //  sh "terraform destroy -input=false -auto-approve"
+                 sh "terraform apply  -input=false tfplan"
              }
          }
 
@@ -63,6 +63,14 @@ pipeline {
         //          sh "terraform apply  -input=false tfplan"
         //      }
         //  }
+
+        stage('Terraform Destroy'){
+             steps {
+                 //sh "returnStatus: true, script: 'terraform workspace new dev'"
+                 //sh "terraform apply -auto-approve"
+                 sh "terraform destroy -input=false -auto-approve"
+             }
+         }
         
     }
 }
