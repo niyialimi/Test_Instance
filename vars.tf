@@ -1,5 +1,5 @@
 variable "AWS_REGION" {
- default = "us-east-1"
+  default = "us-east-1"
 }
 
 variable "PATH_TO_PRIVATE_KEY" {
@@ -10,24 +10,20 @@ variable "PATH_TO_PUBLIC_KEY" {
   default = "ses_key.pub"
 }
 
-variable "vpc_id"{
-    default="vpc-07f3ccd94470f2f70"
+variable "vpc_id" {
+  default = "vpc-07f3ccd94470f2f70"
 }
 
 
-variable "ami" {
-  default = "ami-0edb7c4286314206c"
-}
-
-variable "instance_type"{
-  default ="t2.small"
+variable "instance_type" {
+  default = "t2.small"
 }
 
 variable "subnets" {
   type = list(string)
-  default=[
+  default = [
     "subnet-095f8e571c239c885",
     "subnet-018e1b83fc5bf7daf",
-   ]
+  ]
 }
 

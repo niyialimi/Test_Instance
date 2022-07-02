@@ -1,8 +1,12 @@
-# locals {
-#   ddog_key = jsondecode(
-#     data.aws_secretsmanager_secret_version.ddapikey.secret_string
-#   )
-# }
+locals {
+  ddog_key = jsondecode(
+    data.aws_secretsmanager_secret_version.ddapikey.secret_string
+  )
+
+  golden_ami = jsondecode(
+    data.aws_secretsmanager_secret_version.goldenami.secret_string
+  )
+}
 
 resource "aws_key_pair" "Stack_KP" {
   key_name   = "stackkp"
@@ -13,29 +17,35 @@ resource "aws_key_pair" "Stack_KP" {
 #DATA SOURCES
 
 data "aws_iam_instance_profile" "ssm-instance-prof" {
-  name = "AmazonSSMRoleForInstancesQuickSetup" 
+  name = "AmazonSSMRoleForInstancesQuickSetup"
 }
 
 #Extract Secrets
 
-# data "aws_secretsmanager_secret_version" "ddapikey" {
-#   # Fill in the name you gave to your secret
-#   secret_id = "datadog_api_key"
-# }
+data "aws_secretsmanager_secret_version" "ddapikey" {
+  # Fill in the name you gave to your secret
+  secret_id = "DDOG_API_KEY"
+}
+
+data "aws_secretsmanager_secret_version" "goldenami" {
+  # Fill in the name you gave to your secret
+  secret_id = "stack_golden_ami"
+}
+
 
 #Set Bootstrap script
 data "template_file" "bootstrap" {
-    template = file(format("%s/scripts/bootstrap.tpl", path.module))  
-    vars={
-      Datadog_API_Key=23234333434534534345556565
-      
-    }
+  template = file(format("%s/scripts/bootstrap.tpl", path.module))
+  vars = {
+    DATADOG_API_KEY = local.ddog_key
+
+  }
 }
- 
+
 
 #Create Security Group
 resource "aws_security_group" "datadog-sg" {
-  vpc_id     = var.vpc_id
+  vpc_id      = var.vpc_id
   name        = "Datadog-WebDMZ"
   description = "Datadog Security Group For Datadog Instance"
 }
@@ -99,23 +109,23 @@ resource "aws_security_group_rule" "oracle" {
 
 
 resource "aws_instance" "DDog_Server" {
-  ami                         = var.ami
-  instance_type               = var.instance_type
-  vpc_security_group_ids      = [aws_security_group.datadog-sg.id]
-  subnet_id                   = var.subnets[0]
-  user_data                   = data.template_file.bootstrap.rendered 
-  key_name = aws_key_pair.Stack_KP.key_name
-  iam_instance_profile        = data.aws_iam_instance_profile.ssm-instance-prof.name
+  ami                    = local.golden_ami
+  instance_type          = var.instance_type
+  vpc_security_group_ids = [aws_security_group.datadog-sg.id]
+  subnet_id              = var.subnets[0]
+  user_data              = data.template_file.bootstrap.rendered
+  key_name               = aws_key_pair.Stack_KP.key_name
+  iam_instance_profile   = data.aws_iam_instance_profile.ssm-instance-prof.name
   root_block_device {
-    volume_type               = "gp2"
-    volume_size               = 30
-    delete_on_termination     = true
-    encrypted= "false"
+    volume_type           = "gp2"
+    volume_size           = 30
+    delete_on_termination = true
+    encrypted             = "false"
   }
 
-  tags                        = {
-  Name                        = "Datadog-SB-Server"
-}
+  tags = {
+    Name = "Datadog-SB-Server"
+  }
 }
 
 
