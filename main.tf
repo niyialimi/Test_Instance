@@ -3,7 +3,7 @@ locals {
     data.aws_secretsmanager_secret_version.ddapikey.secret_string
   )
 
-  golden_ami = jsondecode(
+  gd_ami = jsondecode(
     data.aws_secretsmanager_secret_version.goldenami.secret_string
   )
 }
@@ -37,7 +37,7 @@ data "aws_secretsmanager_secret_version" "goldenami" {
 data "template_file" "bootstrap" {
   template = file(format("%s/scripts/bootstrap.tpl", path.module))
   vars = {
-    DATADOG_API_KEY = local.ddog_key
+    DATA_DOG_API_KEY = local.ddog_key.DATADOG_API_KEY
 
   }
 }
@@ -109,7 +109,7 @@ resource "aws_security_group_rule" "oracle" {
 
 
 resource "aws_instance" "DDog_Server" {
-  ami                    = local.golden_ami
+  ami                    = local.gd_ami.golden_ami
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.datadog-sg.id]
   subnet_id              = var.subnets[0]
