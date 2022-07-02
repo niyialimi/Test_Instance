@@ -64,13 +64,13 @@ pipeline {
         //      }
         //  }
 
-        stage('Terraform Destroy'){
-             steps {
-                 //sh "returnStatus: true, script: 'terraform workspace new dev'"
-                 //sh "terraform apply -auto-approve"
-                 sh "terraform destroy -input=false -auto-approve"
-             }
-         }
+        // stage('Terraform Destroy'){
+        //      steps {
+        //          //sh "returnStatus: true, script: 'terraform workspace new dev'"
+        //          //sh "terraform apply -auto-approve"
+        //          sh "terraform destroy -input=false -auto-approve"
+        //      }
+        //  }
         
     }
 }
