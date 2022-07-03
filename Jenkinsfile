@@ -31,13 +31,13 @@ pipeline {
                  sh "terraform plan -out=tfplan -input=false"
              }
          }
-        stage('Dev Deployment Apply') {
-              steps {
-                script {
-                def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
-             }
-           }
-        }
+        // stage('Dev Deployment Apply') {
+        //       steps {
+        //         script {
+        //         def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
+        //      }
+        //    }
+        // }
          stage('Deploy into Dev'){
              steps {
                  //sh "returnStatus: true, script: 'terraform workspace new dev'"
@@ -47,13 +47,13 @@ pipeline {
              }
          }
 
-          stage('UAT Deployment Approval') {
-              steps {
-                script {
-                def userInput = input(id: 'confirm', message: 'Deploy into UAT?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy Into UAT', name: 'confirm'] ])
-             }
-           }
-        }
+        //   stage('UAT Deployment Approval') {
+        //       steps {
+        //         script {
+        //         def userInput = input(id: 'confirm', message: 'Deploy into UAT?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy Into UAT', name: 'confirm'] ])
+        //      }
+        //    }
+        // }
 
         // stage('Deploy into UAT'){
         //      steps {
@@ -64,13 +64,13 @@ pipeline {
         //      }
         //  }
 
-        stage('Terraform Destroy'){
-             steps {
-                 //sh "returnStatus: true, script: 'terraform workspace new dev'"
-                 //sh "terraform apply -auto-approve"
-                 sh "terraform destroy -input=false -auto-approve"
-             }
-         }
+        // stage('Terraform Destroy'){
+        //      steps {
+        //          //sh "returnStatus: true, script: 'terraform workspace new dev'"
+        //          //sh "terraform apply -auto-approve"
+        //          sh "terraform destroy -input=false -auto-approve"
+        //      }
+        //  }
         
     }
 }
