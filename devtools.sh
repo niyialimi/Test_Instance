@@ -515,7 +515,7 @@ ubuntu() {
 
     # Install Docker
     msgInstallStepLinux "Docker"
-    sudo apt-get remove docker docker-engine docker.io containerd runc
+    sudo apt-get -y remove docker docker-engine docker.io containerd runc
     sudo snap install docker
 
     # Linux tools with common commands
@@ -523,9 +523,7 @@ ubuntu() {
 
     # Install Ansible
     if [[ "${devtoolchoices[1]}" == "✔" ]]; then
-        msgInstallStepLinux "Ansible"
-        sudo apt remove ansible
-        sudo apt --purge autoremove          
+        msgInstallStepLinux "Ansible"       
         sudo apt install ansible -y
     fi
 
