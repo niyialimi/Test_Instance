@@ -615,6 +615,12 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
 
             # Ask for the administrator password upfront
             if sudo true 2>/dev/null; then
+                tools=("✔Git" "✔Terraform" "✔Visual-Studio-Code" "✔Slack" \
+                "✔Zoom" "✔Docker" "✔Node" "✔Python" "✔Kubectl" "✔AWS-CLI" "✔Chrome")
+                # Print Array in Column
+                for value in "${tools[@]}"; do 
+                    printf "%s\n" "${value}"
+                done | column
                 ubuntu
                 successMsg
             else
