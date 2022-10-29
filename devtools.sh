@@ -456,6 +456,7 @@ linuxCommonTools() {
 
     # Install Packer
     if [[ "${devtoolchoices[0]}" == "✔" ]]; then
+        msgInstallStepLinux "Packer" 
         sudo snap install packer
     fi
     # Install Consul
@@ -465,7 +466,8 @@ linuxCommonTools() {
     fi
     # Install Oh-My-Zsh
     if [[ "${devtoolchoices[3]}" == "✔" ]]; then
-        msgInstallStepLinux "Oh-My-Zsh"              
+        msgInstallStepLinux "Oh-My-Zsh"
+        sudo apt-get install -y zsh            
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
     # Install IntelliJ
@@ -505,8 +507,7 @@ ubuntu() {
     sudo snap install terraform-snap
 
     # Install Chrome
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install ./google-chrome-stable_current_amd64.deb
+    sudo snap install chromium
 
     # Install Python
     msgInstallStepLinux "Python"                      
@@ -553,8 +554,7 @@ centOS() {
     sudo snap install terraform --classic
 
     # Install Chrome
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    sudo yum install ./google-chrome-stable_current_*.rpm
+    sudo snap install chromium
 
     # Install Python
     msgInstallStepLinux "Python"                      
