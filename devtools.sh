@@ -91,6 +91,7 @@ cat << "EOT"
     \_____\___/|_| |_|\__|_|_| |_|\___/   
  -----------------------------------------------------------------------------
     D E V O P S   T O O L S/A P P S   S E T U P   S C R I P T
+
     NOTE: You can exit the script at any time by pressing CONTROL+C a bunch.
  -----------------------------------------------------------------------------
 EOT
@@ -106,7 +107,7 @@ macToolsApps() {
     done | column
 }
 
-ubuntuToolsApps() {
+linuxToolsApps() {
     tools=("✔Git" "✔Terraform" "✔Visual-Studio-Code" "✔Slack" \
     "✔Zoom" "✔Docker" "✔Node" "✔Python" "✔Kubectl" "✔AWS-CLI" "✔Chrome")
     # Print Array in Column
@@ -129,10 +130,10 @@ macMenuLoop() {
         echo ""
 }
 
-ubuntuMenuLoop() {
+linuxMenuLoop() {
     msgHeading "By default, the following tools and Apps will be installed"
     msgDivider
-    ubuntuToolsApps
+    linuxToolsApps
     msgHeading "Select Optional Additional Tools/Apps"
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
         echo ""
@@ -170,14 +171,14 @@ macMenuSelect() {
     done
 }
 
-ubuntuMenuSelect() {
+linuxMenuSelect() {
     #===============================================================================
     # Show Tools Selection Menu
     #===============================================================================
     clear
     prompt="Select and Deselect by typing number (1 - 7). Press ENTER/Return to continue when done with the selection"
     while 
-        ubuntuMenuLoop && \
+        linuxMenuLoop && \
         read -rp "$prompt" -n1 num && [[ -n "$num" ]];
         
         # echo -n "Select and Deselect by typing number (01 - 20). Hit ENTER to continue when done with the selection: "
@@ -423,28 +424,9 @@ macOS() {
 }
 
 #===============================================================================
-# Linux Ububtu setup function
+# Linux tools with common commands function
 #===============================================================================
-ubuntu() {
-    ubuntuMenuSelect
-    msgHeading "Installing general utilities..."
-    sudo apt-get -y update
-    sudo apt-get -y install default-jdk unzip build-essential vim gnupg gnupg2 curl wget software-properties-common apt-transport-https snapd gpg
-
-    # Install the default tools/Apps
-    msgHeading "Installing the must-have Packages"
-    # Install Git
-    msgInstallStepLinux "Git"                         
-    sudo snap install git-ubuntu --classic
-
-    # Install Terraform
-    msgInstallStepLinux "Terraform"
-    sudo snap install terraform-snap
-
-    # Install Chrome
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install ./google-chrome-stable_current_amd64.deb
-
+linuxCommonTools() {
     # Install AWS CLI
     msgInstallStepLinux "AWS CLI"                     
     sudo snap install aws-cli --classic
@@ -455,42 +437,27 @@ ubuntu() {
 
     # Install Node
     msgInstallStepLinux "Node"                        
-    sudo apt install -y nodejs npm
-
-    # Install Python
-    msgInstallStepLinux "Python"                      
-    sudo apt-get -y install python3 python3-pip python3-virtualenv python3-setuptools
+    sudo snap install node --classic
 
     # Install Slack
     msgInstallStepLinux "Slack"
-    sudo snap install slack --classic
+    sudo snap install slack
 
     # Install Zoom
     msgInstallStepLinux "Zoom"
     sudo snap install zoom-client
 
-    # Install Docker
-    msgInstallStepLinux "Docker"
-    sudo apt-get remove docker docker-engine docker.io containerd runc
-    sudo snap install docker
-
     # Install Visual Studio Code
     msgInstallStepLinux "Visual Studio Code"     
-    sudo snap install --classic code
+    sudo snap install code --classic
 
     # Install  Apps
     msgHeading "Installing additional Tools and Applications"
 
     # Install Packer
     if [[ "${devtoolchoices[0]}" == "✔" ]]; then
+        msgInstallStepLinux "Packer" 
         sudo snap install packer
-    fi
-    # Install Ansible
-    if [[ "${devtoolchoices[1]}" == "✔" ]]; then
-        msgInstallStepLinux "Ansible"
-        sudo apt remove ansible
-        sudo apt --purge autoremove          
-        sudo apt install ansible -y
     fi
     # Install Consul
     if [[ "${devtoolchoices[2]}" == "✔" ]]; then
@@ -499,7 +466,8 @@ ubuntu() {
     fi
     # Install Oh-My-Zsh
     if [[ "${devtoolchoices[3]}" == "✔" ]]; then
-        msgInstallStepLinux "Oh-My-Zsh"              
+        msgInstallStepLinux "Oh-My-Zsh"
+        sudo apt-get install -y zsh            
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
     # Install IntelliJ
@@ -517,7 +485,96 @@ ubuntu() {
         msgInstallStepLinux "Vault"                  
         sudo snap install vault
     fi
+}
 
+#===============================================================================
+# Linux Ububtu setup function
+#===============================================================================
+ubuntu() {
+    linuxMenuSelect
+    msgHeading "Installing general utilities..."
+    sudo apt-get -y update
+    sudo apt-get -y install default-jdk unzip build-essential vim gnupg gnupg2 curl wget software-properties-common apt-transport-https snapd gpg
+
+    # Install the default tools/Apps
+    msgHeading "Installing the must-have Packages"
+    # Install Git
+    msgInstallStepLinux "Git"                         
+    sudo apt-get install -y git
+
+    # Install Terraform
+    msgInstallStepLinux "Terraform"
+    sudo snap install terraform-snap
+
+    # Install Chrome
+    sudo snap install chromium
+
+    # Install Python
+    msgInstallStepLinux "Python"                      
+    sudo apt-get -y install python3 python3-pip python3-virtualenv python3-setuptools
+
+    # Install Docker
+    msgInstallStepLinux "Docker"
+    sudo apt-get -y remove docker docker-engine docker.io containerd runc
+    sudo snap install docker
+
+    # Linux tools with common commands
+    linuxCommonTools
+
+    # Install Ansible
+    if [[ "${devtoolchoices[1]}" == "✔" ]]; then
+        msgInstallStepLinux "Ansible"       
+        sudo apt-get install ansible -y
+    fi
+
+    msgDivider
+}
+
+#===============================================================================
+# Linux CentOS setup function
+#===============================================================================
+centOS() {
+    linuxMenuSelect
+    msgHeading "Installing general utilities..."
+    sudo yum -y update
+    sudo yum install -y yum-utils epel-release snapd curl wget vim-enhanced unzip
+    sudo systemctl enable --now snapd.socket
+    sudo ln -s /var/lib/snapd/snap /snap
+
+    # Install the default tools/Apps
+    msgHeading "Installing the must-have Packages"
+    # Install Git
+    msgInstallStepLinux "Git"                         
+    sudo yum install -y git
+
+    # Install Terraform
+    msgInstallStepLinux "Terraform"
+    sudo snap install terraform --classic
+
+    # Install Chrome
+    sudo snap install chromium
+
+    # Install Python
+    msgInstallStepLinux "Python"                      
+    sudo yum -y install python3 python3-pip python3-virtualenv python3-setuptools
+
+    # Install Docker
+    msgInstallStepLinux "Docker"
+    sudo yum remove docker docker-client docker-client-latest docker-common docker-latest \
+    docker-latest-logrotate docker-logrotate docker-engine
+    sudo snap install docker
+
+    # Linux tools with common commands
+    linuxCommonTools
+
+    # Install Ansible
+    if [[ "${devtoolchoices[1]}" == "✔" ]]; then
+        msgInstallStepLinux "Ansible"
+        sudo yum remove ansible
+        sudo yum --purge autoremove          
+        sudo yum install ansible -y
+    fi
+    
     msgDivider
 }
 
@@ -569,13 +626,24 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
                 failedMsg
             fi
 
-        elif [ "$linux_type" == "CentOS" ]; then
+        elif [ "$linux_type" == "\"CentOS\"" ]; then
             # CentOS
-            msgHeading
-            tput setaf 1 # set text color to red
-            tput bold # bold text
-            echo "Linux_CentOS Setup Coming Soon."
-            exit
+            loggedInUser=$(whoami)
+            msgHeading "Hi ${loggedInUser},"
+            printf "\n\e[0;36mEnter your root "
+
+            # Ask for the administrator password upfront
+            if sudo true 2>/dev/null; then
+                centOS
+                successMsg
+            else
+                msgHeading
+                tput setaf 1 # set text color to green
+                tput bold # bold text
+                echo "Wrong Password."
+                msgDivider
+                failedMsg
+            fi
         else
             msgHeading
             tput setaf 1 # set text color to red
