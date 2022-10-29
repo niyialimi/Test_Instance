@@ -107,7 +107,7 @@ macToolsApps() {
     done | column
 }
 
-ubuntuToolsApps() {
+linuxToolsApps() {
     tools=("✔Git" "✔Terraform" "✔Visual-Studio-Code" "✔Slack" \
     "✔Zoom" "✔Docker" "✔Node" "✔Python" "✔Kubectl" "✔AWS-CLI" "✔Chrome")
     # Print Array in Column
@@ -130,10 +130,10 @@ macMenuLoop() {
         echo ""
 }
 
-ubuntuMenuLoop() {
+linuxMenuLoop() {
     msgHeading "By default, the following tools and Apps will be installed"
     msgDivider
-    ubuntuToolsApps
+    linuxToolsApps
     msgHeading "Select Optional Additional Tools/Apps"
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
         echo ""
@@ -178,7 +178,7 @@ linuxMenuSelect() {
     clear
     prompt="Select and Deselect by typing number (1 - 7). Press ENTER/Return to continue when done with the selection"
     while 
-        ubuntuMenuLoop && \
+        linuxMenuLoop && \
         read -rp "$prompt" -n1 num && [[ -n "$num" ]];
         
         # echo -n "Select and Deselect by typing number (01 - 20). Hit ENTER to continue when done with the selection: "
