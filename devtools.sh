@@ -619,7 +619,7 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
                 "✔Zoom" "✔Docker" "✔Node" "✔Python" "✔Kubectl" "✔AWS-CLI" "✔Chrome")
                 # Print Array in Column
                 for value in "${tools[@]}"; do 
-                    printf "%s\n" "${value}"
+                    echo "Working"
                 done | column
                 ubuntu
                 successMsg
