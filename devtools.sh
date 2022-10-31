@@ -627,7 +627,7 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
                 failedMsg
             fi
 
-        elif [ "$linux_type" == "\"CentOS\"" ]; then
+        elif [ "$linux_type" == "\"CentOS\"" ] || [ "$linux_type" == "\"CentOS Stream\"" ] || [ "$linux_type" == "\"CentOS Linux\"" ]; then
             # CentOS
             loggedInUser=$(whoami)
             msgHeading "Hi ${loggedInUser},"
