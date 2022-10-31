@@ -538,6 +538,7 @@ centOS() {
     sudo yum -y update
     sudo dnf install epel-release
     sudo yum install -y yum-utils snapd curl wget vim-enhanced unzip zsh
+    sudo dnf install squashfs-tools squashfuse
     sudo systemctl enable --now snapd.socket
     sudo ln -s /var/lib/snapd/snap /snap
 
@@ -570,9 +571,7 @@ centOS() {
 
     # Install Ansible
     if [[ "${devtoolchoices[1]}" == "✔" ]]; then
-        msgInstallStepLinux "Ansible"
-        sudo yum remove ansible
-        sudo yum --purge autoremove          
+        msgInstallStepLinux "Ansible"        
         sudo yum install ansible -y
     fi
     
