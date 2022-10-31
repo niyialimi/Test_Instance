@@ -538,7 +538,7 @@ centOS() {
     sudo yum -y update
     sudo dnf install epel-release
     sudo yum install -y yum-utils snapd curl wget vim-enhanced unzip zsh
-    sudo dnf install squashfs-tools squashfuse
+    sudo dnf install -y squashfs-tools squashfuse
     sudo systemctl enable --now snapd.socket
     sudo ln -s /var/lib/snapd/snap /snap
 
