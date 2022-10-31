@@ -62,14 +62,18 @@ errorMsg() {
 # Installation notification message MacOS
 msgInstallStepMac() {
     printf %"$COLUMNS"s |tr " " "-"
+    tput setaf 2 # set text color to green
     printf "\n\nInstalling %s...\n" "$1";
+    tput sgr0 # reset text
     $2 || errorMsg "$1"
 }
 
 # Installation notification message Linux
 msgInstallStepLinux() {
     printf %"$COLUMNS"s |tr " " "-"
+    tput setaf 2 # set text color to green
     printf "\n\nInstalling %s...\n" "$1";
+    tput sgr0 # reset text
 }
 
 # message for already installed tools/Apps
