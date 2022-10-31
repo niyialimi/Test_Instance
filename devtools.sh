@@ -466,8 +466,7 @@ linuxCommonTools() {
     fi
     # Install Oh-My-Zsh
     if [[ "${devtoolchoices[3]}" == "✔" ]]; then
-        msgInstallStepLinux "Oh-My-Zsh"
-        sudo apt-get install -y zsh            
+        msgInstallStepLinux "Oh-My-Zsh"        
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
     # Install IntelliJ
@@ -494,7 +493,7 @@ ubuntu() {
     linuxMenuSelect
     msgHeading "Installing general utilities..."
     sudo apt-get -y update
-    sudo apt-get -y install default-jdk unzip build-essential vim gnupg gnupg2 curl wget software-properties-common apt-transport-https snapd gpg
+    sudo apt-get -y install default-jdk unzip build-essential vim gnupg gnupg2 curl wget software-properties-common apt-transport-https snapd gpg zsh    
 
     # Install the default tools/Apps
     msgHeading "Installing the must-have Packages"
@@ -537,7 +536,9 @@ centOS() {
     linuxMenuSelect
     msgHeading "Installing general utilities..."
     sudo yum -y update
-    sudo yum install -y yum-utils epel-release snapd curl wget vim-enhanced unzip
+    sudo dnf install epel-release
+    sudo yum install -y yum-utils snapd curl wget vim-enhanced unzip zsh
+    sudo dnf install epel-release
     sudo systemctl enable --now snapd.socket
     sudo ln -s /var/lib/snapd/snap /snap
 
@@ -626,7 +627,7 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
                 failedMsg
             fi
 
-        elif [ "$linux_type" == "\"CentOS Stream\"" ]; then
+        elif [ "$linux_type" == "\"CentOS\"" ]; then
             # CentOS
             loggedInUser=$(whoami)
             msgHeading "Hi ${loggedInUser},"
