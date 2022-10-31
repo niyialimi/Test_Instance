@@ -168,7 +168,7 @@ macMenuSelect() {
             else
                 devtoolchoices[num]="✔"
             fi
-                ERROR="%s" " "
+                #ERROR="%s" " "
         else
             ERROR="Invalid option: %s" "$num"
         fi
