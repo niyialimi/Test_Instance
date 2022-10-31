@@ -538,7 +538,6 @@ centOS() {
     sudo yum -y update
     sudo dnf install epel-release
     sudo yum install -y yum-utils snapd curl wget vim-enhanced unzip zsh
-    sudo dnf install epel-release
     sudo systemctl enable --now snapd.socket
     sudo ln -s /var/lib/snapd/snap /snap
 
@@ -553,6 +552,7 @@ centOS() {
     sudo snap install terraform --classic
 
     # Install Chrome
+    msgInstallStepLinux "Google Chrome"
     sudo snap install chromium
 
     # Install Python
@@ -627,7 +627,9 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
                 failedMsg
             fi
 
-        elif [ "$linux_type" == "\"CentOS\"" ] || [ "$linux_type" == "\"CentOS Stream\"" ] || [ "$linux_type" == "\"CentOS Linux\"" ]; then
+        elif [ "$linux_type" == "\"CentOS\"" ] || \
+        [ "$linux_type" == "\"CentOS Stream\"" ] || \
+        [ "$linux_type" == "\"CentOS Linux\"" ]; then
             # CentOS
             loggedInUser=$(whoami)
             msgHeading "Hi ${loggedInUser},"
