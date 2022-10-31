@@ -591,7 +591,7 @@ centOS() {
     linuxMenuSelect
     msgHeading "Installing general utilities..."
     sudo yum -y update
-    sudo dnf install epel-release
+    sudo dnf install -y epel-release
     sudo yum install -y yum-utils java-latest-openjdk curl wget vim-enhanced unzip zsh
 
     # Install the default tools/Apps
