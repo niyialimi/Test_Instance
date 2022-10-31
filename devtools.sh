@@ -592,9 +592,7 @@ centOS() {
     msgHeading "Installing general utilities..."
     sudo yum -y update
     sudo dnf install epel-release
-    sudo yum install -y yum-utils snapd curl wget vim-enhanced unzip zsh
-    sudo systemctl enable --now snapd.socket
-    sudo ln -s /var/lib/snapd/snap /snap
+    sudo yum install -y yum-utils java-latest-openjdk curl wget vim-enhanced unzip zsh
 
     # Install the default tools/Apps
     msgHeading "Installing the must-have Packages"
@@ -642,23 +640,13 @@ centOS() {
     sudo yum install -y awscli
 
     # Install Kubectl
-    msgInstallStepLinux "Kubectl"   
-    cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
-    [kubernetes]
-    name=Kubernetes
-    baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
-    enabled=1
-    gpgcheck=1
-    gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-EOF
-    sudo yum install -y kubectl 
-    # sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    # sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
     # Install Node
     msgInstallStepLinux "Node"                        
     sudo curl -fsSL https://rpm.nodesource.com/setup_19.x | bash -
-    sudo yum install -y nodejs npm
+    sudo yum install -y nodejs
     # dnf module install nodejs:12
 
     # Install  Optional Apps
@@ -690,11 +678,10 @@ EOF
     # Install IntelliJ
     if [[ "${devtoolchoices[4]}" == "✔" ]]; then
         msgInstallStepLinux "IntelliJ"              
-        sudo wget https://download-cf.jetbrains.com/idea/ideaIU-2020.3.tar.gz
-        
-        sudo tar -xvf ideaIU-2020.3.tar.gz
-        cd ideaIU-2020.3
-        sudo ln -s ./ideaIU-2020.3/bin/idea.sh /usr/bin/idea
+        sudo wget https://download-cdn.jetbrains.com/idea/ideaIC-2022.1.1.tar.gz
+        sudo tar -zxvf ideaIC-*.tar.gz
+        sudo mv idea-*/* /opt/idea/
+        sudo ln -sf /opt/bin/idea.sh /bin/intellijidea-ce
     fi
     # Install Golang
     if [[ "${devtoolchoices[5]}" == "✔" ]]; then
