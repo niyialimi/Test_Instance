@@ -682,6 +682,7 @@ centOS() {
         sudo tar -zxvf ideaIC-*.tar.gz
         sudo mv idea-*/* /opt/
         sudo ln -sf /opt/bin/idea.sh /bin/intellijidea-ce
+        sudo rm -rf ideaIC-*.tar.gz
     fi
     # Install Golang
     if [[ "${devtoolchoices[5]}" == "✔" ]]; then
