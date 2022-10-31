@@ -168,7 +168,7 @@ macMenuSelect() {
             else
                 devtoolchoices[num]="✔"
             fi
-                #ERROR="%s" " "
+                ERROR="%s" " "
         else
             ERROR="Invalid option: %s" "$num"
         fi
@@ -197,7 +197,7 @@ linuxMenuSelect() {
             else
                 devtoolchoices[num]="✔"
             fi
-                ERROR="%s" " "
+                # ERROR="%s" " "
         else
             ERROR="Invalid option: %s" "$num"
         fi
@@ -428,69 +428,6 @@ macOS() {
     msgDivider
 }
 
-# #===============================================================================
-# # Linux tools with common commands function
-# #===============================================================================
-# linuxCommonTools() {
-#     # Install AWS CLI
-#     msgInstallStepLinux "AWS CLI"                     
-#     sudo snap install aws-cli --classic
-
-#     # Install Kubectl
-#     msgInstallStepLinux "Kubectl"                     
-#     sudo snap install kubectl --classic
-
-#     # Install Node
-#     msgInstallStepLinux "Node"                        
-#     sudo snap install node --classic
-
-#     # Install Slack
-#     msgInstallStepLinux "Slack"
-#     sudo snap install slack
-
-#     # Install Zoom
-#     msgInstallStepLinux "Zoom"
-#     sudo snap install zoom-client
-
-#     # Install Visual Studio Code
-#     msgInstallStepLinux "Visual Studio Code"     
-#     sudo snap install code --classic
-
-#     # Install  Apps
-#     msgHeading "Installing additional Tools and Applications"
-
-#     # Install Packer
-#     if [[ "${devtoolchoices[0]}" == "✔" ]]; then
-#         msgInstallStepLinux "Packer" 
-#         sudo snap install packer
-#     fi
-#     # Install Consul
-#     if [[ "${devtoolchoices[2]}" == "✔" ]]; then
-#         msgInstallStepLinux "Consul" 
-#         sudo snap install consul
-#     fi
-#         # Install Vault
-#     if [[ "${devtoolchoices[3]}" == "✔" ]]; then
-#         msgInstallStepLinux "Vault"                  
-#         sudo snap install vault
-#     fi
-#     # Install IntelliJ
-#     if [[ "${devtoolchoices[4]}" == "✔" ]]; then
-#         msgInstallStepLinux "IntelliJ"              
-#         sudo snap install intellij-idea-community --classic
-#     fi
-#     # Install Golang
-#     if [[ "${devtoolchoices[5]}" == "✔" ]]; then
-#         msgInstallStepLinux "Golang"                 
-#         sudo snap install go --classic
-#     fi
-#     # Install Oh-My-Zsh
-#     if [[ "${devtoolchoices[6]}" == "✔" ]]; then
-#         msgInstallStepLinux "Oh-My-Zsh"        
-#         sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-#     fi
-# }
-
 #===============================================================================
 # Linux Ububtu setup function
 #===============================================================================
@@ -583,7 +520,7 @@ ubuntu() {
     # Install Oh-My-Zsh
     if [[ "${devtoolchoices[6]}" == "✔" ]]; then
         msgInstallStepLinux "Oh-My-Zsh"        
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
     fi
 
     msgDivider
@@ -697,7 +634,7 @@ centOS() {
     # Install Oh-My-Zsh
     if [[ "${devtoolchoices[6]}" == "✔" ]]; then
         msgInstallStepLinux "Oh-My-Zsh"        
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
     fi
     
     msgDivider
