@@ -180,6 +180,8 @@ linuxMenuSelect() {
     # Show Tools Selection Menu
     #===============================================================================
     clear
+    logoPrint
+    linuxMenuLoop
     prompt="Select and Deselect by typing number (1 - 7). Press ENTER/Return to continue when done with the selection"
     while 
         linuxMenuLoop && \
