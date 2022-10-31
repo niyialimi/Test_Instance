@@ -680,7 +680,7 @@ centOS() {
         msgInstallStepLinux "IntelliJ"              
         sudo wget https://download-cdn.jetbrains.com/idea/ideaIC-2022.1.1.tar.gz
         sudo tar -zxvf ideaIC-*.tar.gz
-        sudo mv idea-*/* /opt/idea/
+        sudo mv idea-*/* /opt/
         sudo ln -sf /opt/bin/idea.sh /bin/intellijidea-ce
     fi
     # Install Golang
