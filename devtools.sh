@@ -15,11 +15,11 @@ macoptions[0]="iTerm2";               devtoolchoices[0]="✔"
 macoptions[1]="Packer";               devtoolchoices[1]=""
 macoptions[2]="Ansible";              devtoolchoices[2]=""
 macoptions[3]="Consul";               devtoolchoices[3]=""
-macoptions[4]="Oh-My-Zsh";            devtoolchoices[4]=""
+macoptions[4]="Vault";                devtoolchoices[4]=""
 macoptions[5]="IntelliJ";             devtoolchoices[5]=""
 macoptions[6]="Golang";               devtoolchoices[6]=""
-macoptions[7]="Vault";                devtoolchoices[7]=""
-macoptions[8]="Pre-Commit Hooks";     devtoolchoices[8]=""
+macoptions[7]="Pre-Commit Hooks";     devtoolchoices[7]=""
+macoptions[8]="Oh-My-Zsh";            devtoolchoices[8]=""
 
 #===============================================================================
 # Optional Tools/Apps to be installed for Ubuntu
@@ -27,10 +27,10 @@ macoptions[8]="Pre-Commit Hooks";     devtoolchoices[8]=""
 ubuntuoptions[0]="Packer";               devtoolchoices[0]="✔"
 ubuntuoptions[1]="Ansible";              devtoolchoices[1]=""
 ubuntuoptions[2]="Consul";               devtoolchoices[2]=""
-ubuntuoptions[3]="Oh-My-Zsh";            devtoolchoices[3]=""
+ubuntuoptions[3]="Vault";                devtoolchoices[3]=""
 ubuntuoptions[4]="IntelliJ";             devtoolchoices[4]=""
 ubuntuoptions[5]="Golang";               devtoolchoices[5]=""
-ubuntuoptions[6]="Vault";                devtoolchoices[6]=""
+ubuntuoptions[6]="Oh-My-Zsh";            devtoolchoices[6]=""
 
 #===============================================================================
 #  Functions
@@ -395,9 +395,9 @@ macOS() {
     if [[ "${devtoolchoices[3]}" == "✔" ]]; then
         msgInstallStepMac "Consul"                 "brew install consul"
     fi
-    # Install Oh-My-Zsh
+    # Install Vault
     if [[ "${devtoolchoices[4]}" == "✔" ]]; then
-        msgInstallStepMac "Oh-My-Zsh"              "sh -c '$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)'"
+        msgInstallStepMac "Vault"                  "brew install vault"
     fi
     # Install IntelliJ
     if [[ "${devtoolchoices[5]}" == "✔" ]]; then
@@ -407,12 +407,8 @@ macOS() {
     if [[ "${devtoolchoices[6]}" == "✔" ]]; then
         msgInstallStepMac "Golang"                 "brew install --cask golang"
     fi
-    # Install Vault
-    if [[ "${devtoolchoices[7]}" == "✔" ]]; then
-        msgInstallStepMac "Vault"                  "brew install vault"
-    fi
     # Install Pre-Commit Hooks
-    if [[ "${devtoolchoices[8]}" == "✔" ]]; then
+    if [[ "${devtoolchoices[7]}" == "✔" ]]; then
         msgHeading "Installing Pre-Commit Hooks"
         msgInstallStepMac "Pre-Commit"             "brew install pre-commit"
         msgInstallStepMac "TFLint"                 "brew install tflint"
@@ -420,71 +416,75 @@ macOS() {
         msgInstallStepMac "Checkov"                "brew install checkov"
         msgInstallStepMac "Terraform Docs"         "brew install terraform-docs" 
     fi
+    # Install Oh-My-Zsh
+    if [[ "${devtoolchoices[8]}" == "✔" ]]; then
+        msgInstallStepMac "Oh-My-Zsh"              "sh -c '$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)'"
+    fi
     msgDivider
 }
 
-#===============================================================================
-# Linux tools with common commands function
-#===============================================================================
-linuxCommonTools() {
-    # Install AWS CLI
-    msgInstallStepLinux "AWS CLI"                     
-    sudo snap install aws-cli --classic
+# #===============================================================================
+# # Linux tools with common commands function
+# #===============================================================================
+# linuxCommonTools() {
+#     # Install AWS CLI
+#     msgInstallStepLinux "AWS CLI"                     
+#     sudo snap install aws-cli --classic
 
-    # Install Kubectl
-    msgInstallStepLinux "Kubectl"                     
-    sudo snap install kubectl --classic
+#     # Install Kubectl
+#     msgInstallStepLinux "Kubectl"                     
+#     sudo snap install kubectl --classic
 
-    # Install Node
-    msgInstallStepLinux "Node"                        
-    sudo snap install node --classic
+#     # Install Node
+#     msgInstallStepLinux "Node"                        
+#     sudo snap install node --classic
 
-    # Install Slack
-    msgInstallStepLinux "Slack"
-    sudo snap install slack
+#     # Install Slack
+#     msgInstallStepLinux "Slack"
+#     sudo snap install slack
 
-    # Install Zoom
-    msgInstallStepLinux "Zoom"
-    sudo snap install zoom-client
+#     # Install Zoom
+#     msgInstallStepLinux "Zoom"
+#     sudo snap install zoom-client
 
-    # Install Visual Studio Code
-    msgInstallStepLinux "Visual Studio Code"     
-    sudo snap install code --classic
+#     # Install Visual Studio Code
+#     msgInstallStepLinux "Visual Studio Code"     
+#     sudo snap install code --classic
 
-    # Install  Apps
-    msgHeading "Installing additional Tools and Applications"
+#     # Install  Apps
+#     msgHeading "Installing additional Tools and Applications"
 
-    # Install Packer
-    if [[ "${devtoolchoices[0]}" == "✔" ]]; then
-        msgInstallStepLinux "Packer" 
-        sudo snap install packer
-    fi
-    # Install Consul
-    if [[ "${devtoolchoices[2]}" == "✔" ]]; then
-        msgInstallStepLinux "Consul" 
-        sudo snap install consul
-    fi
-    # Install Oh-My-Zsh
-    if [[ "${devtoolchoices[3]}" == "✔" ]]; then
-        msgInstallStepLinux "Oh-My-Zsh"        
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    fi
-    # Install IntelliJ
-    if [[ "${devtoolchoices[4]}" == "✔" ]]; then
-        msgInstallStepLinux "IntelliJ"              
-        sudo snap install intellij-idea-community --classic
-    fi
-    # Install Golang
-    if [[ "${devtoolchoices[5]}" == "✔" ]]; then
-        msgInstallStepLinux "Golang"                 
-        sudo snap install go --classic
-    fi
-    # Install Vault
-    if [[ "${devtoolchoices[6]}" == "✔" ]]; then
-        msgInstallStepLinux "Vault"                  
-        sudo snap install vault
-    fi
-}
+#     # Install Packer
+#     if [[ "${devtoolchoices[0]}" == "✔" ]]; then
+#         msgInstallStepLinux "Packer" 
+#         sudo snap install packer
+#     fi
+#     # Install Consul
+#     if [[ "${devtoolchoices[2]}" == "✔" ]]; then
+#         msgInstallStepLinux "Consul" 
+#         sudo snap install consul
+#     fi
+#         # Install Vault
+#     if [[ "${devtoolchoices[3]}" == "✔" ]]; then
+#         msgInstallStepLinux "Vault"                  
+#         sudo snap install vault
+#     fi
+#     # Install IntelliJ
+#     if [[ "${devtoolchoices[4]}" == "✔" ]]; then
+#         msgInstallStepLinux "IntelliJ"              
+#         sudo snap install intellij-idea-community --classic
+#     fi
+#     # Install Golang
+#     if [[ "${devtoolchoices[5]}" == "✔" ]]; then
+#         msgInstallStepLinux "Golang"                 
+#         sudo snap install go --classic
+#     fi
+#     # Install Oh-My-Zsh
+#     if [[ "${devtoolchoices[6]}" == "✔" ]]; then
+#         msgInstallStepLinux "Oh-My-Zsh"        
+#         sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+#     fi
+# }
 
 #===============================================================================
 # Linux Ububtu setup function
@@ -506,10 +506,23 @@ ubuntu() {
     sudo snap install terraform-snap
 
     # Install Chrome
+    msgInstallStepLinux "Google Chrome"  
     sudo snap install chromium
 
+    # Install Slack
+    msgInstallStepLinux "Slack"
+    sudo snap install slack
+
+    # Install Zoom
+    msgInstallStepLinux "Zoom"
+    sudo snap install zoom-client
+
+    # Install Visual Studio Code
+    msgInstallStepLinux "Visual Studio Code"     
+    sudo snap install code --classic
+
     # Install Python
-    msgInstallStepLinux "Python"                      
+    msgInstallStepLinux "Python"                    
     sudo apt-get -y install python3 python3-pip python3-virtualenv python3-setuptools
 
     # Install Docker
@@ -517,13 +530,55 @@ ubuntu() {
     sudo apt-get -y remove docker docker-engine docker.io containerd runc
     sudo snap install docker
 
-    # Linux tools with common commands
-    linuxCommonTools
+    # Install AWS CLI
+    msgInstallStepLinux "AWS CLI"                     
+    sudo snap install aws-cli --classic
 
+    # Install Kubectl
+    msgInstallStepLinux "Kubectl"                     
+    sudo snap install kubectl --classic
+
+    # Install Node
+    msgInstallStepLinux "Node"                        
+    sudo snap install node --classic
+
+    # Install  Optional Apps
+    msgHeading "Installing additional Tools and Applications"
+
+    # Install Packer
+    if [[ "${devtoolchoices[0]}" == "✔" ]]; then
+        msgInstallStepLinux "Packer" 
+        sudo snap install packer
+    fi
     # Install Ansible
     if [[ "${devtoolchoices[1]}" == "✔" ]]; then
         msgInstallStepLinux "Ansible"       
         sudo apt-get install ansible -y
+    fi
+    # Install Consul
+    if [[ "${devtoolchoices[2]}" == "✔" ]]; then
+        msgInstallStepLinux "Consul" 
+        sudo snap install consul
+    fi
+    # Install Vault
+    if [[ "${devtoolchoices[3]}" == "✔" ]]; then
+        msgInstallStepLinux "Vault"                  
+        sudo snap install vault
+    fi
+    # Install IntelliJ
+    if [[ "${devtoolchoices[4]}" == "✔" ]]; then
+        msgInstallStepLinux "IntelliJ"              
+        sudo snap install intellij-idea-community --classic
+    fi
+    # Install Golang
+    if [[ "${devtoolchoices[5]}" == "✔" ]]; then
+        msgInstallStepLinux "Golang"                 
+        sudo snap install go --classic
+    fi
+    # Install Oh-My-Zsh
+    if [[ "${devtoolchoices[6]}" == "✔" ]]; then
+        msgInstallStepLinux "Oh-My-Zsh"        
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
 
     msgDivider
@@ -538,7 +593,6 @@ centOS() {
     sudo yum -y update
     sudo dnf install epel-release
     sudo yum install -y yum-utils snapd curl wget vim-enhanced unzip zsh
-    sudo dnf install -y squashfs-tools squashfuse
     sudo systemctl enable --now snapd.socket
     sudo ln -s /var/lib/snapd/snap /snap
 
@@ -550,29 +604,117 @@ centOS() {
 
     # Install Terraform
     msgInstallStepLinux "Terraform"
-    sudo snap install terraform --classic
+    sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    sudo yum -y install terraform
 
     # Install Chrome
-    msgInstallStepLinux "Google Chrome"
-    sudo snap install chromium
+    msgInstallStepLinux "Google Chrome"  
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    sudo yum install -y ./google-chrome-stable_current_*.rpm
 
-    # Install Python
-    msgInstallStepLinux "Python"                      
-    sudo yum -y install python3 python3-pip python3-virtualenv python3-setuptools
+    # Install Slack
+    msgInstallStepLinux "Slack"
+    wget https://downloads.slack-edge.com/linux_releases/slack-4.9.1-0.1.fc21.x86_64.rpm
+    sudo yum install -y ./slack-*.rpm
+
+    # Install Zoom
+    msgInstallStepLinux "Zoom"
+    wget https://zoom.us/client/latest/zoom_x86_64.rpm
+    sudo yum install -y ./zoom_x86_64.rpm
+
+
+    # Install Visual Studio Code
+    msgInstallStepLinux "Visual Studio Code"     
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    yum check-update
+    sudo yum -y install code
 
     # Install Docker
     msgInstallStepLinux "Docker"
     sudo yum remove docker docker-client docker-client-latest docker-common docker-latest \
     docker-latest-logrotate docker-logrotate docker-engine
-    sudo snap install docker
+    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-    # Linux tools with common commands
-    linuxCommonTools
+    # Install AWS CLI
+    msgInstallStepLinux "AWS CLI"                     
+    # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    # unzip awscliv2.zip
+    # sudo ./aws/install
+    # rm -f awscliv2.zip
+    sudo yum install -y awscli
 
+    # Install Kubectl
+    msgInstallStepLinux "Kubectl"    
+    if grep -Fxq "baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64" /etc/yum.repos.d/kubernetes.repo
+    then
+        echo "Not adding kubectl repo because it is already present"
+    else
+        echo "Adding kubectl repo..."  
+        cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+        [kubernetes]
+        name=Kubernetes
+        baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+    fi
+    sudo yum install -y kubectl
+
+    # Install Node
+    msgInstallStepLinux "Node"                        
+    curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+    sudo yum install -y nodejs npm
+
+    # Install  Optional Apps
+    msgHeading "Installing additional Tools and Applications"
+
+    # Install Packer
+    if [[ "${devtoolchoices[0]}" == "✔" ]]; then
+        msgInstallStepLinux "Packer" 
+        sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+        sudo yum -y install packer
+    fi
     # Install Ansible
     if [[ "${devtoolchoices[1]}" == "✔" ]]; then
-        msgInstallStepLinux "Ansible"        
-        sudo yum install ansible -y
+        msgInstallStepLinux "Ansible"       
+        sudo yum -y install ansible
+    fi
+    # Install Consul
+    if [[ "${devtoolchoices[2]}" == "✔" ]]; then
+        msgInstallStepLinux "Consul" 
+        sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+        sudo yum -y install consul
+    fi
+    # Install Vault
+    if [[ "${devtoolchoices[3]}" == "✔" ]]; then
+        msgInstallStepLinux "Vault"                  
+        sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+        sudo yum -y install vault
+    fi
+    # Install IntelliJ
+    if [[ "${devtoolchoices[4]}" == "✔" ]]; then
+        msgInstallStepLinux "IntelliJ"              
+        wget https://download-cf.jetbrains.com/idea/ideaIU-2020.3.tar.gz
+        
+        sudo tar -xvf ideaIU-2020.3.tar.gz
+        cd ideaIU-2020.3
+        sudo ln -s ./ideaIU-2020.3/bin/idea.sh /usr/bin/idea
+    fi
+    # Install Golang
+    if [[ "${devtoolchoices[5]}" == "✔" ]]; then
+        msgInstallStepLinux "Golang"         
+        # wget https://dl.google.com/go/go1.19.2.linux-amd64.tar.gz        
+        # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
+        # export PATH=$PATH:/usr/local/go/bin
+        sudo yum install -y golang
+    fi
+    # Install Oh-My-Zsh
+    if [[ "${devtoolchoices[6]}" == "✔" ]]; then
+        msgInstallStepLinux "Oh-My-Zsh"        
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
     
     msgDivider
