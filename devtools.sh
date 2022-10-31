@@ -609,17 +609,17 @@ centOS() {
 
     # Install Chrome
     msgInstallStepLinux "Google Chrome"  
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
     sudo yum install -y ./google-chrome-stable_current_*.rpm
 
     # Install Slack
     msgInstallStepLinux "Slack"
-    wget https://downloads.slack-edge.com/linux_releases/slack-4.9.1-0.1.fc21.x86_64.rpm
+    sudo wget https://downloads.slack-edge.com/linux_releases/slack-4.9.1-0.1.fc21.x86_64.rpm
     sudo yum install -y ./slack-*.rpm
 
     # Install Zoom
     msgInstallStepLinux "Zoom"
-    wget https://zoom.us/client/latest/zoom_x86_64.rpm
+    sudo wget https://zoom.us/client/latest/zoom_x86_64.rpm
     sudo yum install -y ./zoom_x86_64.rpm
 
 
@@ -639,34 +639,27 @@ centOS() {
 
     # Install AWS CLI
     msgInstallStepLinux "AWS CLI"                     
-    # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    # unzip awscliv2.zip
-    # sudo ./aws/install
-    # rm -f awscliv2.zip
     sudo yum install -y awscli
 
     # Install Kubectl
-    msgInstallStepLinux "Kubectl"    
-    if grep -Fxq "baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64" /etc/yum.repos.d/kubernetes.repo
-    then
-        echo "Not adding kubectl repo because it is already present"
-    else
-        echo "Adding kubectl repo..."  
-        cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
-        [kubernetes]
-        name=Kubernetes
-        baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
-        enabled=1
-        gpgcheck=1
-        gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    msgInstallStepLinux "Kubectl"   
+    cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+    [kubernetes]
+    name=Kubernetes
+    baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+    enabled=1
+    gpgcheck=1
+    gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
-    fi
-    sudo yum install -y kubectl
+    sudo yum install -y kubectl 
+    # sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    # sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
     # Install Node
     msgInstallStepLinux "Node"                        
-    curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+    sudo curl -fsSL https://rpm.nodesource.com/setup_19.x | bash -
     sudo yum install -y nodejs npm
+    # dnf module install nodejs:12
 
     # Install  Optional Apps
     msgHeading "Installing additional Tools and Applications"
@@ -697,7 +690,7 @@ EOF
     # Install IntelliJ
     if [[ "${devtoolchoices[4]}" == "✔" ]]; then
         msgInstallStepLinux "IntelliJ"              
-        wget https://download-cf.jetbrains.com/idea/ideaIU-2020.3.tar.gz
+        sudo wget https://download-cf.jetbrains.com/idea/ideaIU-2020.3.tar.gz
         
         sudo tar -xvf ideaIU-2020.3.tar.gz
         cd ideaIU-2020.3
@@ -706,9 +699,6 @@ EOF
     # Install Golang
     if [[ "${devtoolchoices[5]}" == "✔" ]]; then
         msgInstallStepLinux "Golang"         
-        # wget https://dl.google.com/go/go1.19.2.linux-amd64.tar.gz        
-        # rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
-        # export PATH=$PATH:/usr/local/go/bin
         sudo yum install -y golang
     fi
     # Install Oh-My-Zsh
