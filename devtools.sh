@@ -605,7 +605,7 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
         ;;
     # Linux OS
     linux*)
-        linux_type="$(awk -F= '/^NAME/{print $2}' /etc/os-release|sed 's/"//'|sed 's/"//'|awk '{print $1;}')"
+        linux_type="$(awk -F= '/^NAME/{print $2}' /etc/os-release)"
 
         if [ "$linux_type" == "\"Ubuntu\"" ]; then
             # Ubuntu
@@ -626,7 +626,7 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
                 failedMsg
             fi
 
-        elif [ "$linux_type" == "\"CentOS\"" ]; then
+        elif [ "$linux_type" == "\"CentOS Stream\"" ]; then
             # CentOS
             loggedInUser=$(whoami)
             msgHeading "Hi ${loggedInUser},"
