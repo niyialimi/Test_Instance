@@ -29,8 +29,13 @@ if ($host.Name -ne 'ConsoleHost') {
 
 function Check-Administrator  
 {  
-    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-    $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+    [OutputType([bool])]
+    param()
+    process {
+        [Security.Principal.WindowsPrincipal]
+        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
+        return $user.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator);
+    }
 }
 
 function Check-Command($cmdname) {
@@ -84,9 +89,12 @@ function logoPrint {
 
 # Default tools to be insatlled
 function windowsToolsApps {
-    Write-Host "✔ Git      ✔ wget     ✔ Google Chrome        ✔ Terraform `n
-✔ Slack     ✔ Zoom      ✔ Visual-Studio-Code      ✔ Python`n
-✔ Docker    ✔ AWS-CLI   ✔ Kubectl      ✔ Node     ✔ Azure CLI"
+    $tools = @("✔ Git", "✔ Bash", "✔ Terraform", "✔ Visual-Studio-Code", "✔ Slack", `
+    "✔ Zoom", "✔ Docker", "✔ Node", "✔ Python", "✔ Kubectl", "✔ AWS-CLI", "✔ Chrome")
+    # Print Array in Column
+
+    $tools | Format-Wide -Column 5
+    
 }
 
 # Display Menu
@@ -305,7 +313,7 @@ function windowsOS() {
 }
 
 if(-not (Check-Administrator)) {
-    Write-Warning "You do not have Administrator rights to run this script!`nPlease re-run this script as an Administrator!"
+    Write-Warning "You do not have Administrator rights to run this script!`nPlease re-run this script as an Administrator!" -ForegroundColor Red
     Write-Host ""
     failedMsg
 } else {
