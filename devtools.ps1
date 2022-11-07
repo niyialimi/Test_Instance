@@ -137,15 +137,16 @@ function failedMsg() {
 
     Write-Host ""
     Write-Host @'
-        ╭─────────────────────────────────────────────────────────────────╮
-        │░░░░░░░░░░░░░░░░░░░░░░░░░░░ Next Steps ░░░░░░░░░░░░░░░░░░░░░░░░░░│
-        ├─────────────────────────────────────────────────────────────────┤
-        │                                                                 │
-        │           Contact tech-support team to finish setup.            │
-        │                                                                 │
-        │    The link below will connect you to the tech-support team.    │
-        │                                                                 │
-        └─────────────────────────────────────────────────────────────────┘
+         ==================================================================
+        |||||||||||||||||||||||||||| Next Steps ||||||||||||||||||||||||||||
+        |==================================================================|
+        |                                                                  |
+        |           Contact tech-support team to finish setup.             |
+        |                                                                  |
+        |    The link below will connect you to the tech-support team.     |
+        |                                                                  |
+        |                                                                  |
+         ================================================================= 
 '@ -ForegroundColor Red
     Write-Host ""
     Write-Host "Link: $slack" -ForegroundColor Red
