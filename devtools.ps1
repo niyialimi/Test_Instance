@@ -6,7 +6,7 @@
 $slack="https://contino.slack.com/archives/C1TER2RQQ"
 
 #===============================================================================
-# Optional Tools/Apps to be installed for MacOS
+# Optional Tools/Apps to be installed for Windows OS
 #===============================================================================
 $Windowsoptions = @(
     "Tabby Terminal",
@@ -89,11 +89,9 @@ function logoPrint {
 
 # Default tools to be insatlled
 function windowsToolsApps {
-    # Print Array in Column
-    $objects = foreach ($tool in $tools) {
-        Write-Host $tool
-    }
-    $objects | Format-Wide -Column 2
+    Write-Host "✔ Git      ✔ wget     ✔ Google Chrome        ✔ Terraform `n
+✔ Slack     ✔ Zoom      ✔ Visual-Studio-Code      ✔ Python`n
+✔ Docker    ✔ AWS-CLI   ✔ Kubectl      ✔ Node     ✔ Azure CLI"
 }
 
 # Display Menu
@@ -324,4 +322,3 @@ if(-not (Check-Administrator)) {
     windowsOS
     successMsg
 }
-
