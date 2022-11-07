@@ -9,19 +9,19 @@ $slack="https://contino.slack.com/archives/C1TER2RQQ"
 # Default tools to be installed for Windows OS
 #===============================================================================
 $tools = @(
-    "✔ Git",
-    "✔ wget",
-    "✔ Google Chrome",
-    "✔ Terraform",
-    "✔ Slack",
-    "✔ Zoom",
-    "✔ Visual-Studio-Code",
-    "✔ Python",
-    "✔ Docker",
-    "✔ AWS-CLI",
-    "✔ Kubectl",
-    "✔ Node",
-    "✔ Azure CLI"
+    "Git",
+    "wget",
+    "Google Chrome",
+    "Terraform",
+    "Slack",
+    "Zoom",
+    "Visual-Studio-Code",
+    "Python",
+    "Docker",
+    "AWS-CLI",
+    "Kubectl",
+    "Node",
+    "Azure CLI"
 )
 
 #===============================================================================
