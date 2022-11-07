@@ -108,16 +108,17 @@ function successMsg() {
     msgDivider
     Write-Host ""
     Write-Host @'
-        ╭─────────────────────────────────────────────────────────────────╮
-        │░░░░░░░░░░░░░░░░░░░░░░░░░░░ Next Steps ░░░░░░░░░░░░░░░░░░░░░░░░░░│
-        ├─────────────────────────────────────────────────────────────────┤
-        │                                                                 │
-        │   You might need some licnese to use the premium/enterprise     │
-        │               features of some of these tools/Apps.             │
-        │                                                                 │
-        │   The link below will connect you to the tech-support team.     │
-        │                                                                 │
-        └─────────────────────────────────────────────────────────────────┘
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        |||||||||||||||||||||||||||| Next Steps ||||||||||||||||||||||||||||
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        +                                                                  +
+        +    You might need some licnese to use the premium/enterprise     +
+        +                 features of some of these tools/Apps.            +
+        +                                                                  +
+        +    The link below will connect you to the tech-support team.     +
+        +                                                                  +
+        +                                                                  +
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '@ -ForegroundColor Green
     Write-Host ""
     Write-Host "Link: $slack" -ForegroundColor Green
@@ -146,7 +147,7 @@ function failedMsg() {
         +    The link below will connect you to the tech-support team.     +
         +                                                                  +
         +                                                                  +
-        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '@ -ForegroundColor Red
     Write-Host ""
     Write-Host "Link: $slack" -ForegroundColor Red
