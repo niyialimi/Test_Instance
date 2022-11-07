@@ -29,13 +29,8 @@ if ($host.Name -ne 'ConsoleHost') {
 
 function Check-Administrator  
 {  
-    [OutputType([bool])]
-    param()
-    process {
-        [Security.Principal.WindowsPrincipal]
-        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
-        return $user.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator);
-    }
+    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
 function Check-Command($cmdname) {
@@ -90,8 +85,8 @@ function logoPrint {
 # Default tools to be insatlled
 function windowsToolsApps {
     Write-Host "Git      wget     Google Chrome     Terraform `n
-Slack     Zoom      Visual-Studio-Code      Python`n
-Docker    WS-CLI    Kubectl      Node       Azure CLI"
+Slack    Zoom    Visual-Studio-Code      Python`n
+Docker   WS-CLI   Kubectl      Node      Azure CLI"
 }
 
 # Display Menu
@@ -310,7 +305,7 @@ function windowsOS() {
 }
 
 if(-not (Check-Administrator)) {
-    Write-Warning "You do not have Administrator rights to run this script!`nPlease re-run this script as an Administrator!" -ForegroundColor Red
+    Write-Warning "You do not have Administrator rights to run this script!`nPlease re-run this script as an Administrator!"
     Write-Host ""
     failedMsg
 } else {
