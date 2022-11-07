@@ -32,7 +32,8 @@ function Check-Administrator
     [OutputType([bool])]
     param()
     process {
-        [Security.Principal.WindowsPrincipal]$user = [Security.Principal.WindowsIdentity]::GetCurrent();
+        [Security.Principal.WindowsPrincipal]
+        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
         return $user.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator);
     }
 }
@@ -139,7 +140,7 @@ function successMsg() {
 # failed message if installation was unable to complete
 function failedMsg() {
     Write-Host "Script Failed" -ForegroundColor Red
-    msgDivider
+    "-"*80 | Write-Host -ForegroundColor Red
 
     Write-Host ""
     Write-Host @'
@@ -170,8 +171,7 @@ function failedMsg() {
 function windowsOS() {
     windowsMenuLoop
     Write-Host ""
-    Write-Host "Select addtional tools by pressing number (1 - 7)."
-    $choice = Read-Host "Press ENTER to continue when done with the selection"
+    $choice = Read-Host "Select addtional tools by pressing number (1 - 7).`nPress ENTER to continue when done with the selection"
     $ok = $choice -match '[123456789]+$'
     if ( -not $ok) {
         Write-Host "Invalid selection" -ForegroundColor Red
@@ -312,7 +312,7 @@ function windowsOS() {
 }
 
 if(-not (Check-Administrator)) {
-    Write-Host "This script must be executed as Administrator." -ForegroundColor Red
+    Write-Warning "You do not have Administrator rights to run this script!`nPlease re-run this script as an Administrator!" -ForegroundColor Red
     Write-Host ""
     failedMsg
 } else {
