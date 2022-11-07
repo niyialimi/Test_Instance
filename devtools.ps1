@@ -5,6 +5,7 @@
 # tech-support slack channel
 $slack="https://contino.slack.com/archives/C1TER2RQQ"
 
+
 #===============================================================================
 # Optional Tools/Apps to be installed for Windows OS
 #===============================================================================
@@ -92,9 +93,10 @@ function windowsToolsApps {
     $tools = @("✔ Git", "✔ Bash", "✔ Terraform", "✔ Visual-Studio-Code", "✔ Slack", `
     "✔ Zoom", "✔ Docker", "✔ Node", "✔ Python", "✔ Kubectl", "✔ AWS-CLI", "✔ Chrome")
     # Print Array in Column
-
-    $tools | Format-Wide -Column 5
-    
+    $objects = foreach ($tool in $tools) {
+        Write-Host $tool
+    }
+    $objects | Format-Wide -Column 2
 }
 
 # Display Menu
