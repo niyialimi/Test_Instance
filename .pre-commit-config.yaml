@@ -1,0 +1,48 @@
+tages: [commit]
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.75.0
+    hooks:
+      # Rewrite Terraform configuration files to a canonical format and style
+      - id: terraform_fmt
+
+      # Validate the configuration files in a directory
+      - id: terraform_validate
+
+      # Ensure coding standards are met
+      - id: terraform_tflint
+        args:
+          - --args=--enable-rule=terraform_documented_variables
+
+      # Static analysis of potential security issues.
+      - id: terraform_tfsec
+
+      # Scan cloud infrastructure configurations to find misconfigurations
+      - id: terraform_checkov
+
+      # Create README file documentation.
+      - id: terraform_docs
+        args:
+          - --hook-config=--path-to-file=./README.md
+          - --hook-config=--add-to-existing-file=true
+          - --hook-config=--create-file-if-not-exist=true
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      # Remove any spaces that are on the end of a line
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+        exclude: CHANGELOG.md
+
+      # Remove any blank lines on the end of file
+      - id: end-of-file-fixer
+
+      # Validate that all YAML files are syntactically correct
+      - id: check-yaml
+
+      # Validate that all JSON files are syntactically correct
+      - id: check-json
+
+      # Check for files that contain merge conflict strings.
+      - id: check-merge-conflict
